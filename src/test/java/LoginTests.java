@@ -1,5 +1,7 @@
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
+import setup.DriverSetUp;
 
 
 import static org.junit.Assert.assertTrue;
@@ -9,21 +11,26 @@ public class LoginTests {
 
     @BeforeMethod
     public void drive() {
-        System.setProperty("webdriver.chrome.driver", "src/chromedriver");
-        Properties.driver = new ChromeDriver();
-        Properties.driver.get("https://picsartstage2.com/");
-        navBar = new NavBar(Properties.driver);
+        navBar = new NavBar();
     }
 
     @AfterMethod
     public void endDrive() {
-        Properties.driver.quit();
+        DriverSetUp.driver.quit();
+    }
+
+    @Test
+    @org.junit.Ignore
+    public void loginWithKey(){
+        DriverSetUp.driver.manage().addCookie(new Cookie("user_key","3fb5ce77-a372-42bf-9a52-289dfa0f4324"));
+        DriverSetUp.driver.navigate().refresh();
+        assertTrue("Error while Logging in", navBar.isProfileIconDisplayed());
     }
 
     @Test(priority = 6666)
     public void loginWithValidCredentials() {
-        LoginPage loginPage = new LoginPage(Properties.driver);
-        if (navBar == null) navBar = new NavBar(Properties.driver);
+        LoginPage loginPage = new LoginPage();
+        if (navBar == null) navBar = new NavBar();
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -37,7 +44,7 @@ public class LoginTests {
 
     @Test
     public void loginWithINValidUsername() {
-        LoginPage loginPage = new LoginPage(Properties.driver);
+        LoginPage loginPage = new LoginPage();
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -50,7 +57,7 @@ public class LoginTests {
 
     @Test
     public void loginWithEmptyUsername() {
-        LoginPage loginPage = new LoginPage(Properties.driver);
+        LoginPage loginPage = new LoginPage();
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -63,7 +70,7 @@ public class LoginTests {
 
     @Test
     public void loginWithINValidPassword() {
-        LoginPage loginPage = new LoginPage(Properties.driver);
+        LoginPage loginPage = new LoginPage();
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -77,7 +84,7 @@ public class LoginTests {
 
     @Test
     public void loginWithEmptyPassword() {
-        LoginPage loginPage = new LoginPage(Properties.driver);
+        LoginPage loginPage = new LoginPage();
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -87,5 +94,6 @@ public class LoginTests {
 
         assertTrue("Error message not displayed", loginPage.isInputFieldRed());
     }
+
 
 }
