@@ -1,67 +1,49 @@
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
+import org.junit.After;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.BeforeMethod;
-
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 import static org.junit.Assert.assertTrue;
 
 public class TestPage {
 
     private WebDriver driver;
+    private NavBar navBar;
 
-    public void login() {
-        LoginPage loginPage=new LoginPage(driver);
-
-        loginPage.clickLogInButtonFromNavBar();
-        loginPage.enterUsername("janeeyr");
-        loginPage.enterPassword("230901890");
-        loginPage.clickSignIn();
-    }
-
-    public void logout() {
-        driver.findElement(By.cssSelector(".pa-uiLib-headerProfileInfo-profileInfo")).click();
-        WebElement logoutButton = driver.findElement(By.cssSelector("[href='/logout']"));
-        logoutButton.click();
-    }
-
-
-    public boolean isProfileIconDisplayed() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".pa-uiLib-headerProfileInfo-profileInfo")));
-        WebElement profileIcon = driver.findElement(By.cssSelector(".pa-uiLib-headerProfileInfo-profileInfo"));
-        return profileIcon.isDisplayed();
-    }
-
-    @BeforeMethod
-    public void drive(){
+    @BeforeTest
+    public void drive() {
         System.setProperty("webdriver.chrome.driver", "src/chromedriver");
         driver = new ChromeDriver();
         driver.get("https://picsartstage2.com/");
+        navBar = new NavBar(driver);
+
     }
 
-    @Test
-    public void FirstTest() {
-        //Set Driver
-        drive();
+    @Test(priority = 0)
+    public void loginWithValidCredentials() {
+        LoginPage loginPage = new LoginPage(driver);
 
-        //Login
-        login();
+        navBar.clickLogInButtonFromNavBarSO();
 
-        //assertTrue( "Error while Logging in", driver.getCurrentUrl().contains("/create"));
-        assertTrue( "Error while Logging in", isProfileIconDisplayed());
+        loginPage.enterUsername("janeeyr");
+        loginPage.enterPassword("230901890");
+        loginPage.clickSignIn();
 
-        //Check if Login Successful
-        System.out.println(isProfileIconDisplayed() ? "Login Successful" : "Error while Logging in");
+        assertTrue("Error while Logging in", navBar.isProfileIconDisplayed());
 
-        //Logout
-        if (isProfileIconDisplayed())
-            logout();
+    }
 
-        //Quit Driver
+
+    @Test(priority = 1)
+    public void logout() {
+        navBar = new NavBar(driver);
+        navBar.clickLogOutButtonFromNavBarSI();
+        assertTrue("Error while Logging out", navBar.isLogInButtonDisplayed());
+    }
+
+    @AfterTest
+    public void endDrive(){
         driver.quit();
     }
 }

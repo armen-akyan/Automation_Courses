@@ -10,24 +10,19 @@ public class LoginPage {
     private By usernameField = By.name("username");
     private By passwordField = By.name("password");
     private By signInButton = By.cssSelector("[class*='primary pa-uiLib-authentication-signIn']");
-    private By logInNavBar = By.cssSelector("[data-test='headerAuth-signInBtn pa-uiLib-headerAuth-authBtn']");
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void clickLogInButtonFromNavBar() {
-        WebElement loginBtn = driver.findElement(logInNavBar);
-        loginBtn.click();
-        new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(usernameField));
-    }
-
     public void enterUsername(String username) {
+        new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(usernameField));
         WebElement usernameFld = driver.findElement(usernameField);
         usernameFld.sendKeys(username);
     }
 
     public void enterPassword(String password) {
+        new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(passwordField));
         WebElement passwordFld = driver.findElement(passwordField);
         passwordFld.sendKeys(password);
     }
