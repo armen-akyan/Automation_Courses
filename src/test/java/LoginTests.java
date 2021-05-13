@@ -1,29 +1,31 @@
 import org.junit.After;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+
+
 import static org.junit.Assert.assertTrue;
 
 public class LoginTests {
-
-    private WebDriver driver;
     private NavBar navBar;
 
     @BeforeMethod
     public void drive() {
         System.setProperty("webdriver.chrome.driver", "src/chromedriver");
-        driver = new ChromeDriver();
-        driver.get("https://picsartstage2.com/");
-        navBar = new NavBar(driver);
+        Properties.driver = new ChromeDriver();
+        Properties.driver.get("https://picsartstage2.com/");
+        navBar = new NavBar(Properties.driver);
+    }
 
+    @AfterMethod
+    public void endDrive() {
+        Properties.driver.quit();
     }
 
     @Test(priority = 6666)
     public void loginWithValidCredentials() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(Properties.driver);
+        if (navBar == null) navBar = new NavBar(Properties.driver);
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -37,7 +39,7 @@ public class LoginTests {
 
     @Test
     public void loginWithINValidUsername() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(Properties.driver);
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -50,7 +52,7 @@ public class LoginTests {
 
     @Test
     public void loginWithEmptyUsername() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(Properties.driver);
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -63,7 +65,7 @@ public class LoginTests {
 
     @Test
     public void loginWithINValidPassword() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(Properties.driver);
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -77,7 +79,7 @@ public class LoginTests {
 
     @Test
     public void loginWithEmptyPassword() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(Properties.driver);
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -88,15 +90,4 @@ public class LoginTests {
         assertTrue("Error message not displayed", loginPage.isInputFieldRed());
     }
 
-//    @Test(priority = 8898989)
-//    public void logout() {
-//        navBar = new NavBar(driver);
-//        navBar.clickLogOutButtonFromNavBarSI();
-//        assertTrue("Error while Logging out", navBar.isLogInButtonDisplayed());
-//    }
-
-    @AfterTest
-    public void endDrive(){
-        driver.quit();
-    }
 }
