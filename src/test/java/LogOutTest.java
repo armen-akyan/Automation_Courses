@@ -2,7 +2,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import setup.DriverSetUp;
+import setup.*;
 
 import static org.testng.AssertJUnit.assertTrue;
 
@@ -22,7 +22,7 @@ public class LogOutTest {
 
     @Test
     public void logout() {
-        new LoginTests().loginWithKey();
+        //new LoginTests().loginWithKey();
         navBar.clickLogOutButtonFromNavBarSI();
         assertTrue("Error while Logging out", navBar.isLogInButtonDisplayed());
     }

@@ -1,9 +1,9 @@
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
-import setup.DriverSetUp;
+import setup.*;
 
-
+//"3fb5ce77-a372-42bf-9a52-289dfa0f4324"
 import static org.junit.Assert.assertTrue;
 
 public class LoginTests {
@@ -21,8 +21,8 @@ public class LoginTests {
 
     @Test
     //@org.junit.Ignore
-    public void loginWithKey(){
-        DriverSetUp.driver.manage().addCookie(new Cookie("user_key","3fb5ce77-a372-42bf-9a52-289dfa0f4324"));
+    public static void loginWithKey(String key){
+        DriverSetUp.driver.manage().addCookie(new Cookie("user_key",key));
         DriverSetUp.driver.navigate().refresh();
         //assertTrue("Error while Logging in", navBar.isProfileIconDisplayed());
     }
