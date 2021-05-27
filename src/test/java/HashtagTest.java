@@ -30,7 +30,6 @@ public class HashtagTest {
         //upload photo
         photo = ApiHelper.uploadPhoto(key);
         image_url = photo.get("id").getAsString();
-        System.out.println("User's user_key is -> " + key);
     }
 
     @Test
