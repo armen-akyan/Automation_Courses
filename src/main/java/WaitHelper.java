@@ -17,7 +17,7 @@ public class WaitHelper {
                     until(ExpectedConditions.visibilityOfElementLocated(location));
             return this;
         } catch (WebDriverException e) {
-            throw new Error("Element with locator + " + location.toString() + "  not found");
+            throw new Error("Element with locator " + location.toString() + "  not found");
         }
     }
 }
