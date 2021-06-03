@@ -1,5 +1,4 @@
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 import setup.*;
 
@@ -29,7 +28,7 @@ public class LoginTests {
 
     @Test(priority = 6666)
     public void loginWithValidCredentials() {
-        LoginPage loginPage = new LoginPage();
+        LoginDialog loginPage = new LoginDialog();
         if (navBar == null) navBar = new NavBar();
 
         navBar.clickLogInButtonFromNavBarSO();
@@ -44,7 +43,7 @@ public class LoginTests {
 
     @Test
     public void loginWithINValidUsername() {
-        LoginPage loginPage = new LoginPage();
+        LoginDialog loginPage = new LoginDialog();
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -57,7 +56,7 @@ public class LoginTests {
 
     @Test
     public void loginWithEmptyUsername() {
-        LoginPage loginPage = new LoginPage();
+        LoginDialog loginPage = new LoginDialog();
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -70,7 +69,7 @@ public class LoginTests {
 
     @Test
     public void loginWithINValidPassword() {
-        LoginPage loginPage = new LoginPage();
+        LoginDialog loginPage = new LoginDialog();
 
         navBar.clickLogInButtonFromNavBarSO();
 
@@ -84,7 +83,7 @@ public class LoginTests {
 
     @Test
     public void loginWithEmptyPassword() {
-        LoginPage loginPage = new LoginPage();
+        LoginDialog loginPage = new LoginDialog();
 
         navBar.clickLogInButtonFromNavBarSO();
 

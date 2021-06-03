@@ -7,7 +7,7 @@ public class LikeTest {
     @BeforeMethod
     public void setUp() throws IOException {
         JsonObject obj = ApiHelper.createUser();
-        LoginPage loginPage=new LoginPage();
+        LoginDialog loginPage=new LoginDialog();
         loginPage.enterUsername(obj.get("username").toString());
         loginPage.enterUsername(obj.get("username").toString());
 

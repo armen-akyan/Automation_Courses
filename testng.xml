@@ -5,7 +5,7 @@
     <test name="all-packages">
         <packages>
             <package>
-                <name>src.test.java.EditorTests</name>
+                <name>src.test.java</name>
             </package>
         </packages>
     </test>

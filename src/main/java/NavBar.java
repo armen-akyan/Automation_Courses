@@ -1,52 +1,63 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import setup.*;
 
-public class NavBar {
-    private By logInNavBarSO = By.cssSelector("[data-test='headerAuth-signInBtn pa-uiLib-headerAuth-authBtn']");
-    private By logOutNavBarSI = By.cssSelector("[href='/logout']");
-    private By profileIcon = By.cssSelector(".pa-uiLib-headerProfileInfo-profileInfo");
+public class NavBar extends BasePage {
+
+    @FindBy(css = "[data-test='headerAuth-signInBtn pa-uiLib-headerAuth-authBtn']")
+    private WebElement logInNavBarSO;
+
+    @FindBy(css = "[href='/logout']")
+    private WebElement logOutNavBarSI;
+
+    @FindBy(css = ".pa-uiLib-headerProfileInfo-profileInfo")
+    private WebElement profileIcon;
+
+    @FindBy(name = "username")
+    private WebElement usernameField;
 
 
-    private By usernameField = By.name("username"); //to check in login dialogue
+    @Override
+    public String getUrl() {
+        return BASE_URL;
+    }
 
+
+    public NavBar() {
+        openByURL(getUrl());
+        PageFactory.initElements(DriverSetUp.getDriver(), this);
+    }
 
     public void clickLogOutButtonFromNavBarSI() {
         isProfileIconDisplayed();
         clickProfileIcon();
-        WebElement logOutBtn = DriverSetUp.driver.findElement(logOutNavBarSI);
-        logOutBtn.click();
-        new WebDriverWait(DriverSetUp.driver, 10).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(logInNavBarSO));
+        logOutNavBarSI.click();
+        WaitHelper.getInstance().WaitForElementToBeDisplayed(logInNavBarSO);
     }
 
     public void clickLogInButtonFromNavBarSO() {
-        new WebDriverWait(DriverSetUp.driver, 2).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(logInNavBarSO));
-
-        WebElement loginBtn = DriverSetUp.driver.findElement(logInNavBarSO);
-        loginBtn.click();
-        new WebDriverWait(DriverSetUp.driver, 2).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(usernameField));
+        logInNavBarSO.click();
+        WaitHelper.getInstance().WaitForElementToBeDisplayed(usernameField);
     }
 
-    public void clickProfileIcon(){
-        if (isProfileIconDisplayed()){
-            WebElement profileIcn = DriverSetUp.driver.findElement(profileIcon);
-            profileIcn.click();
-        }
+    public void clickProfileIcon() {
+        click(profileIcon);
 
     }
 
     public boolean isProfileIconDisplayed() {
-        new WebDriverWait(DriverSetUp.driver, 10).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(profileIcon));
-        WebElement profileIcn = DriverSetUp.driver.findElement(profileIcon);
-        return profileIcn.isDisplayed();
+        return isDisplayed(profileIcon);
     }
 
     public boolean isLogInButtonDisplayed() {
-        new WebDriverWait(DriverSetUp.driver, 10).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(logInNavBarSO));
-        WebElement loginBtn = DriverSetUp.driver.findElement(logInNavBarSO);
-        return loginBtn.isDisplayed();
+        return isDisplayed(logInNavBarSO);
+
     }
+
+
 }

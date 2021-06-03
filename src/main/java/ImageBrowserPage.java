@@ -1,33 +1,39 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import setup.DriverSetUp;
 
 public class ImageBrowserPage extends BasePage {
 
-    private final By likeIconLocation = By.cssSelector(".actions-section .notifier-hover-toggle .like");
-    private final By hashtag = By.cssSelector("[class*='grid-col'] [href*='/hashtag']");
+    @FindBy(css = ".actions-section .notifier-hover-toggle .like")
+    private WebElement likeIcon;
 
-    public ImageBrowserPage() {
-    }
-
-    public ImageBrowserPage(String imageID) {
-        openByURL(BASE_URL + "/i/" + imageID);
-    }
-
-    public String getHashtag(){
-        WaitHelper.getInstance().WaitForElementToBeDisplayed(hashtag);
-        return findWebElement(hashtag).getText();
-    }
+    @FindBy(css = "[class*='grid-col'] [href*='/hashtag']")
+    private WebElement hashtag;
 
     @Override
     public String getUrl() {
-        return null;
+        return BASE_URL + "/i/";
     }
 
+    public ImageBrowserPage(String imageID) {
+        openByURL(getUrl() + imageID);
+        PageFactory.initElements(DriverSetUp.getDriver(), this);
+
+    }
+
+    public String getHashtag() {
+        WaitHelper.getInstance().WaitForElementToBeDisplayed(hashtag);
+        return hashtag.getText();
+    }
+
+
     public void clickOnLikeIcon() {
-        WaitHelper.getInstance().WaitForElementToBeDisplayed(likeIconLocation);
-        click(likeIconLocation);
+        click(likeIcon);
     }
 
     public boolean isImageLiked() {
-        return findWebElement(likeIconLocation).getAttribute("class").contains("active");
+        return likeIcon.getAttribute("class").contains("active");
     }
 }

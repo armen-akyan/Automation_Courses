@@ -1,17 +1,37 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import setup.DriverSetUp;
 
 import java.util.List;
 
 public class TextEditorPage extends BasePage {
 
-    private By textPreset = By.cssSelector("[data-test='text-preset']");
-    private By canvasContainer = By.cssSelector("[data-test='canvas-container']");
-    private By headingText = By.cssSelector("[data-test='heading_text']");
-    private By shadowButton = By.cssSelector("[data-test='shadow']");
-    private By colorInputField = By.cssSelector("[data-test='color_input']");
-    private By layersItems = By.cssSelector("[data-test='layers-item']");
-    private By chosenColorBox = By.cssSelector("[data-test='first_color_box']");
+    @FindBy(css = "[data-test='text-preset']")
+    private WebElement textPreset;
+
+    @FindBy(css = "[data-test='canvas-container']")
+    private WebElement canvasContainer;
+
+    @FindBy(css = "[data-test='heading_text']")
+    private WebElement headingText;
+
+    @FindBy(css = "[data-test='shadow']")
+    private WebElement shadowButton;
+
+    @FindBy(css = "[data-test='color_input']")
+    private WebElement colorInputField;
+
+    @FindBy(css = "[data-test='layers-item']")
+    private List<WebElement> layersItems;
+
+    @FindBy(css = "[data-test='first_color_box']")
+    private WebElement chosenColorBox;
+
+    @FindBy(id = "context-menu")
+    private WebElement contextMenu;
+
 
     @Override
     public String getUrl() {
@@ -20,13 +40,7 @@ public class TextEditorPage extends BasePage {
 
     public TextEditorPage() {
         openByURL(getUrl());
-    }
-
-    public void dragAndDropTexts() throws InterruptedException {
-        scrollUntilVisibleJS(textPreset);
-        WebElement text = findWebElement(textPreset);
-        WebElement canvas = findWebElement(canvasContainer);
-        dragAndDrop(textPreset, canvasContainer);
+        PageFactory.initElements(DriverSetUp.getDriver(), this);
     }
 
     public void clickHeadingText() {
@@ -38,16 +52,22 @@ public class TextEditorPage extends BasePage {
     }
 
     public WebElement getColorInputField() {
-        return findWebElement(colorInputField);
+        return colorInputField;
     }
 
     public int getLayersItemsCount() {
-        List<WebElement> layerItems = findWebElements(layersItems);
-        return layerItems.size();
+        return layersItems.size();
     }
 
     public String getChosenColorValue() {
-        WebElement webElement = findWebElement(chosenColorBox);
-        return webElement.getCssValue("background-color");
+        return chosenColorBox.getCssValue("background-color");
+    }
+
+    public WebElement getCanvasContainer() {
+        return canvasContainer;
+    }
+
+    public boolean isContextMenuDisplayed() {
+        return isDisplayed(contextMenu);
     }
 }

@@ -18,6 +18,10 @@ public abstract class BasePage {
 
     public abstract String getUrl();
 
+    public final void open() {
+        openByURL(getUrl());
+    }
+
     public WebElement findWebElement(By location) {
         LOGGER.info("Finding element -> " + location.toString());
         WaitHelper.getInstance().WaitForElementToBeDisplayed(location);
@@ -142,5 +146,15 @@ public abstract class BasePage {
 
     public void pressEnterOnElement(By locator) {
         findWebElement(locator).sendKeys(Keys.ENTER);
+    }
+
+    public void rightClick(WebElement element) {
+        Actions actions = new Actions(DriverSetUp.getDriver());
+        actions.contextClick(element).perform();
+    }
+
+    public void rightClick(By location) {
+        Actions actions = new Actions(DriverSetUp.getDriver());
+        actions.contextClick(findWebElement(location)).perform();
     }
 }
