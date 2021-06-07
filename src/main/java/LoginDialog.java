@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import setup.*;
 
-public class LoginDialog extends BasePage {
+public class LoginDialog extends BasePage<LoginDialog> {
 
     @FindBy(name = "username")
     private WebElement usernameField;
@@ -39,11 +39,13 @@ public class LoginDialog extends BasePage {
 
 
     public void enterUsername(String username) {
-        type(usernameField, username);
+        if (isDisplayed(usernameField))
+            type(usernameField, username);
     }
 
     public void enterPassword(String password) {
-        type(passwordField, password);
+        if (isDisplayed(passwordField))
+            type(passwordField, password);
     }
 
     public void clickSignIn() {
@@ -51,7 +53,9 @@ public class LoginDialog extends BasePage {
     }
 
     public String getTopSectionErrorMessage() {
-        return topSectionErrorMessage.getText();
+        if (isDisplayed(topSectionErrorMessage))
+            return topSectionErrorMessage.getText();
+        return null;
     }
 
     public boolean isInputFieldRed() {

@@ -1,7 +1,6 @@
-import org.openqa.selenium.interactions.Actions;
+import Helpers.LoginHelper;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import setup.*;
 
@@ -14,20 +13,21 @@ public class EditorTests {
 
     @BeforeMethod
     public void drive() {
+        DriverSetUp.getDriver();
         navBar = new NavBar();
     }
 
     @AfterMethod
     public void endDrive() {
-        DriverSetUp.driver.quit();
+        DriverSetUp.quit();
     }
 
     @Test
     public void imageUpload() {
+        LoginHelper.loginWithKey(null);
         CreatePage createPage = new CreatePage();
-        //new LoginTests().loginWithKey();
-        createPage.UploadImage();
-        assertTrue( createPage.isDownloadButtonDisplayed(),"Upload Failed");
+        createPage.uploadImage();
+        assertTrue(createPage.initPage().isDownloadButtonDisplayed(), "Upload Failed");
     }
 
     @Test
@@ -35,9 +35,9 @@ public class EditorTests {
         CreatePage createPage = new CreatePage();
         createPage.clickInstagramStory();
         createPage.switchToTab(1);
-        createPage.closeInstructionsWindowByCookie();
+        createPage.initPage().closeInstructionsWindowByCookie();
         createPage.clickTemplatesIcon();
-        assertEquals( createPage.getSizesListSize(),28, "Number of elements is less than 28");
+        assertEquals(createPage.initPage().getSizesListSize(), 28, "Number of elements is less than 28");
     }
 
 

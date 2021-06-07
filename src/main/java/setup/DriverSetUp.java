@@ -1,9 +1,10 @@
 package setup;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public abstract class DriverSetUp {
-    public static WebDriver driver;
+    private static WebDriver driver;
 
     public static WebDriver getDriver() {
         if (driver != null) {
@@ -11,7 +12,13 @@ public abstract class DriverSetUp {
         }
         System.setProperty("webdriver.chrome.driver", "src/chromedriver");
         driver = new ChromeDriver();
+        driver.get("https://automation.picsartstage2.com/");
         return driver;
+    }
+
+    public static void quit() {
+        DriverSetUp.getDriver().quit();
+        driver = null;
     }
 
 }

@@ -1,3 +1,5 @@
+package Helpers;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.bytebuddy.utility.RandomString;

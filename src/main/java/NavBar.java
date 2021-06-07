@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import setup.*;
 
-public class NavBar extends BasePage {
+public class NavBar extends BasePage<NavBar> {
 
     @FindBy(css = "[data-test='headerAuth-signInBtn pa-uiLib-headerAuth-authBtn']")
     private WebElement logInNavBarSO;

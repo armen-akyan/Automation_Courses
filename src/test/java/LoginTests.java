@@ -1,8 +1,8 @@
 import org.openqa.selenium.Cookie;
+import org.testng.Assert;
 import org.testng.annotations.*;
 import setup.*;
 
-//"3fb5ce77-a372-42bf-9a52-289dfa0f4324"
 import static org.junit.Assert.assertTrue;
 
 public class LoginTests {
@@ -10,20 +10,13 @@ public class LoginTests {
 
     @BeforeMethod
     public void drive() {
+        DriverSetUp.getDriver();
         navBar = new NavBar();
     }
 
     @AfterMethod
     public void endDrive() {
-        DriverSetUp.driver.quit();
-    }
-
-    @Test
-    //@org.junit.Ignore
-    public static void loginWithKey(String key){
-        DriverSetUp.driver.manage().addCookie(new Cookie("user_key",key));
-        DriverSetUp.driver.navigate().refresh();
-        //assertTrue("Error while Logging in", navBar.isProfileIconDisplayed());
+        DriverSetUp.quit();
     }
 
     @Test(priority = 6666)
@@ -37,7 +30,7 @@ public class LoginTests {
         loginPage.enterPassword("230901890");
         loginPage.clickSignIn();
 
-        assertTrue("Error while Logging in", navBar.isProfileIconDisplayed());
+        Assert.assertTrue(navBar.initPage().isProfileIconDisplayed(), "Error while Logging in");
 
     }
 
@@ -51,7 +44,7 @@ public class LoginTests {
         loginPage.enterPassword("230901890");
         loginPage.clickSignIn();
 
-        assertTrue("Error message not displayed", loginPage.getTopSectionErrorMessage().contains("Username or password incorrect"));
+        assertTrue("Error message not displayed", loginPage.initPage().getTopSectionErrorMessage().contains("Username or password incorrect"));
     }
 
     @Test
@@ -64,7 +57,7 @@ public class LoginTests {
         loginPage.enterPassword("230901890");
         loginPage.clickSignIn();
 
-        assertTrue("Error message not displayed", loginPage.isInputFieldRed());
+        assertTrue("Error message not displayed", loginPage.initPage().isInputFieldRed());
     }
 
     @Test
@@ -77,7 +70,7 @@ public class LoginTests {
         loginPage.enterPassword("2309018d90");
         loginPage.clickSignIn();
 
-        assertTrue("Error message not displayed", loginPage.getTopSectionErrorMessage().contains("Username or password incorrect"));
+        assertTrue("Error message not displayed", loginPage.initPage().getTopSectionErrorMessage().contains("Username or password incorrect"));
     }
 
 
@@ -91,7 +84,7 @@ public class LoginTests {
         loginPage.enterPassword("");
         loginPage.clickSignIn();
 
-        assertTrue("Error message not displayed", loginPage.isInputFieldRed());
+        assertTrue("Error message not displayed", loginPage.initPage().isInputFieldRed());
     }
 
 

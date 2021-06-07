@@ -10,8 +10,8 @@ import setup.*;
 
 import java.util.List;
 
-public class CreatePage extends BasePage {
-    @FindBy(css = "[accept='image/jpeg, image/png, image/gif']")
+public class CreatePage extends BasePage<CreatePage> {
+    @FindBy(css = "[type='file']")
     private WebElement uploadButton;
 
     @FindBy(id = "download-button")
@@ -35,7 +35,7 @@ public class CreatePage extends BasePage {
         PageFactory.initElements(DriverSetUp.getDriver(), this);
     }
 
-    public void UploadImage() {
+    public void uploadImage() {
         WaitHelper.getInstance().WaitForElementToBeDisplayed(uploadButton);
         uploadButton.sendKeys("/Users/armen_a02/Desktop/me_aua.png");
     }
@@ -46,7 +46,7 @@ public class CreatePage extends BasePage {
     }
 
     public void clickInstagramStory() {
-        Actions actions = new Actions(DriverSetUp.driver);
+        Actions actions = new Actions(DriverSetUp.getDriver());
         WaitHelper.getInstance().WaitForElementToBeDisplayed(instagramButton);
         actions.moveToElement(instagramButton).click().build().perform();
     }

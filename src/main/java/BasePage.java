@@ -1,22 +1,33 @@
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.PageFactory;
 import setup.*;
+import org.openqa.selenium.support.ui.LoadableComponent;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.*;
 
-public abstract class BasePage {
+import static setup.DriverSetUp.getDriver;
+
+public abstract class BasePage<T> {
     private static final Logger LOGGER = Logger.getLogger(BasePage.class);
     protected WebDriver driver;
-    protected static final String BASE_URL = "https://automation.picsartstage2.com/";
+    public static final String BASE_URL = "https://automation.picsartstage2.com/";
 
     public BasePage() {
-        this.driver = DriverSetUp.getDriver();
+        this.driver = getDriver();
     }
 
     public abstract String getUrl();
+
+    protected T initPage() {
+        PageFactory.initElements(getDriver(), this);
+        LOGGER.info("Initialising to " + getDriver().getCurrentUrl());
+        return (T) this;
+    }
 
     public final void open() {
         openByURL(getUrl());
@@ -60,12 +71,12 @@ public abstract class BasePage {
 
     public void clickByJS(By location) {
         LOGGER.info("Clicking on -> " + location.toString());
-        ((JavascriptExecutor) DriverSetUp.getDriver()).executeScript("arguments[0].click();", findWebElement(location));
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", findWebElement(location));
     }
 
     public void clickByJS(WebElement element) {
         LOGGER.info("Clicking on -> " + element.toString());
-        ((JavascriptExecutor) DriverSetUp.getDriver()).executeScript("arguments[0].click();", element);
+        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", element);
     }
 
     public void clickAndHold(By location) {
@@ -85,6 +96,7 @@ public abstract class BasePage {
     public boolean isDisplayed(WebElement element) {
         try {
             LOGGER.info("Making sure that element is displayed -> " + element.toString());
+            WaitHelper.getInstance().WaitForElementToBeDisplayed(element);
             return element.isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
@@ -149,12 +161,12 @@ public abstract class BasePage {
     }
 
     public void rightClick(WebElement element) {
-        Actions actions = new Actions(DriverSetUp.getDriver());
+        Actions actions = new Actions(getDriver());
         actions.contextClick(element).perform();
     }
 
     public void rightClick(By location) {
-        Actions actions = new Actions(DriverSetUp.getDriver());
+        Actions actions = new Actions(getDriver());
         actions.contextClick(findWebElement(location)).perform();
     }
 }

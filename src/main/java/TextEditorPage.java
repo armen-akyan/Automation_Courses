@@ -6,7 +6,7 @@ import setup.DriverSetUp;
 
 import java.util.List;
 
-public class TextEditorPage extends BasePage {
+public class TextEditorPage extends BasePage<TextEditorPage> {
 
     @FindBy(css = "[data-test='text-preset']")
     private WebElement textPreset;

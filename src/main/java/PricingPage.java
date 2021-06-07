@@ -7,7 +7,7 @@ import setup.DriverSetUp;
 
 import javax.swing.*;
 
-public class PricingPage extends BasePage {
+public class PricingPage extends BasePage<PricingPage> {
     @FindBy(css = "[class='c0232']")
     private WebElement carouselImage;
 

@@ -16,7 +16,7 @@ public class WaitHelper {
 
     public WaitHelper WaitForElementToBeDisplayed(By location) {
         try {
-            new WebDriverWait(DriverSetUp.driver, DEFAULT_TIMEOUT).
+            new WebDriverWait(DriverSetUp.getDriver(), DEFAULT_TIMEOUT).
                     until(ExpectedConditions.visibilityOfElementLocated(location));
             return this;
         } catch (WebDriverException e) {
@@ -26,7 +26,7 @@ public class WaitHelper {
 
     public WaitHelper WaitForElementToBeDisplayed(WebElement webElement) {
         try {
-            new WebDriverWait(DriverSetUp.driver, DEFAULT_TIMEOUT).
+            new WebDriverWait(DriverSetUp.getDriver(), DEFAULT_TIMEOUT).
                     until(ExpectedConditions.visibilityOf(webElement));
             return this;
         } catch (WebDriverException e) {
@@ -37,7 +37,7 @@ public class WaitHelper {
 
     public WaitHelper WaitForElementsToBeDisplayed(List<WebElement> webElement) {
         try {
-            new WebDriverWait(DriverSetUp.driver, DEFAULT_TIMEOUT).
+            new WebDriverWait(DriverSetUp.getDriver(), DEFAULT_TIMEOUT).
                     until(ExpectedConditions.visibilityOfAllElements(webElement));
             return this;
         } catch (WebDriverException e) {

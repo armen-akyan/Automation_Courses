@@ -4,7 +4,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import setup.DriverSetUp;
 
-public class ErrorPage extends BasePage {
+public class ErrorPage extends BasePage<ErrorPage> {
 
 
     @FindBy(css = "[class='message']")

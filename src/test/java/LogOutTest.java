@@ -11,18 +11,18 @@ public class LogOutTest {
 
     @BeforeMethod
     public void drive() {
-        DriverSetUp.getDriver().get("https://picsartstage2.com/");
+        DriverSetUp.getDriver();
+        new LoginTests().loginWithValidCredentials();
         navBar = new NavBar();
     }
 
     @AfterMethod
     public void endDrive(){
-        DriverSetUp.driver.quit();
+        DriverSetUp.quit();
     }
 
     @Test
     public void logout() {
-        //new LoginTests().loginWithKey();
         navBar.clickLogOutButtonFromNavBarSI();
         assertTrue("Error while Logging out", navBar.isLogInButtonDisplayed());
     }

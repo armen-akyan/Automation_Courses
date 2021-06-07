@@ -4,7 +4,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import setup.DriverSetUp;
 
-public class ImageBrowserPage extends BasePage {
+public class ImageBrowserPage extends BasePage<ImageBrowserPage> {
 
     @FindBy(css = ".actions-section .notifier-hover-toggle .like")
     private WebElement likeIcon;

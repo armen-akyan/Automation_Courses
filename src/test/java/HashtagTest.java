@@ -1,6 +1,5 @@
+import Helpers.ApiHelper;
 import com.google.gson.JsonObject;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -25,13 +24,13 @@ public class HashtagTest {
         DriverSetUp.getDriver();
 //        new LoginDialog();
 //        new NavBar().isLogInButtonDisplayed();
-//        JsonObject user = ApiHelper.createUser();
+//        JsonObject user = Helpers.ApiHelper.createUser();
 //        key = user.get("response").getAsJsonObject().get("key").getAsString();
 //        LoginTests.loginWithKey(key);
 //        new NavBar().isProfileIconDisplayed();
 //
 //        //upload photo
-//        photo = ApiHelper.uploadPhoto(key);
+//        photo = Helpers.ApiHelper.uploadPhoto(key);
 //        image_url = photo.get("id").getAsString();
     }
 
@@ -47,13 +46,8 @@ public class HashtagTest {
         //delete user
         ApiHelper.deleteUser(key);
         //quit driver
-        DriverSetUp.driver.quit();
+        DriverSetUp.quit();
     }
 
-//    @Test
-//    public void like() throws IOException, InterruptedException {
-//        JsonObject image = ApiHelper.uploadPhoto(key);
-//        ApiHelper.likePhoto(key, image.get("id").getAsString());
-//        new ImageBrowserPage(image.get("id").getAsString());
-//    }
+
 }
