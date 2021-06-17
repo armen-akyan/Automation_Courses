@@ -5,9 +5,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
+import java.time.Clock;
+import java.awt.*;
+
 import setup.*;
 
-public class NavBar extends BasePage<NavBar> {
+import java.time.Clock;
+
+public class NavBar extends BaseComponent<NavBar> {
 
     @FindBy(css = "[data-test='headerAuth-signInBtn pa-uiLib-headerAuth-authBtn']")
     private WebElement logInNavBarSO;
@@ -21,16 +27,19 @@ public class NavBar extends BasePage<NavBar> {
     @FindBy(name = "username")
     private WebElement usernameField;
 
-
-    @Override
-    public String getUrl() {
-        return BASE_URL;
+    public NavBar() {
+        super(Clock.systemUTC(), 20);
     }
 
 
-    public NavBar() {
-        openByURL(getUrl());
+    @Override
+    protected void load() {
         PageFactory.initElements(DriverSetUp.getDriver(), this);
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        isLogInButtonDisplayed();
     }
 
     public void clickLogOutButtonFromNavBarSI() {

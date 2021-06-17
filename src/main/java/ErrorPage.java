@@ -27,4 +27,13 @@ public class ErrorPage extends BasePage<ErrorPage> {
     }
 
 
+    @Override
+    protected void load() {
+        DriverSetUp.getDriver().get(getUrl());
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        isErrorMessageDisplayed();
+    }
 }

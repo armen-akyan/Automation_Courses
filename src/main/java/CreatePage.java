@@ -5,6 +5,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import setup.*;
 
@@ -16,6 +17,9 @@ public class CreatePage extends BasePage<CreatePage> {
 
     @FindBy(id = "download-button")
     private WebElement downloadButton;
+
+    @FindBy(css = "[data-test='search-input']")
+    private WebElement searchField;
 
     @FindBy(css = "[data-test='insta-story']")
     private WebElement instagramButton;
@@ -35,6 +39,16 @@ public class CreatePage extends BasePage<CreatePage> {
         PageFactory.initElements(DriverSetUp.getDriver(), this);
     }
 
+    @Override
+    protected void load() {
+        DriverSetUp.getDriver().get(getUrl());
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        isSearchFieldDisplayed();
+    }
+
     public void uploadImage() {
         WaitHelper.getInstance().WaitForElementToBeDisplayed(uploadButton);
         uploadButton.sendKeys("/Users/armen_a02/Desktop/me_aua.png");
@@ -42,6 +56,11 @@ public class CreatePage extends BasePage<CreatePage> {
 
     public boolean isDownloadButtonDisplayed() {
         WaitHelper.getInstance().WaitForElementToBeDisplayed(downloadButton);
+        return true;
+    }
+
+    public boolean isSearchFieldDisplayed() {
+        WaitHelper.getInstance().WaitForElementToBeDisplayed(searchField);
         return true;
     }
 

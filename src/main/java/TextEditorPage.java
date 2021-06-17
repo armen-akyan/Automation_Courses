@@ -43,6 +43,16 @@ public class TextEditorPage extends BasePage<TextEditorPage> {
         PageFactory.initElements(DriverSetUp.getDriver(), this);
     }
 
+    @Override
+    protected void load() {
+        DriverSetUp.getDriver().get(getUrl());
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        isContextMenuDisplayed();
+    }
+
     public void clickHeadingText() {
         clickByJS(headingText);
     }

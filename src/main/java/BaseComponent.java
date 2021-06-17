@@ -1,36 +1,31 @@
+import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-import setup.*;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.SlowLoadableComponent;
 
-
+import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.*;
-
 import static setup.DriverSetUp.getDriver;
 
-public abstract class BasePage<T> extends LoadableComponent<BasePage<T>> {
+public abstract class BaseComponent<T> extends SlowLoadableComponent<BaseComponent<T>> {
     private static final Logger LOGGER = Logger.getLogger(BasePage.class);
     protected WebDriver driver;
-    public static final String BASE_URL = "https://automation.picsartstage2.com/";
 
-    public BasePage() {
+
+
+    public BaseComponent(Clock clock, int timeOutInSeconds) {
+        super(clock, timeOutInSeconds);
         this.driver = getDriver();
     }
-
-    public abstract String getUrl();
 
     protected T initPage() {
         PageFactory.initElements(getDriver(), this);
         LOGGER.info("Initialising to " + getDriver().getCurrentUrl());
         return (T) this;
-    }
-
-    public final void open() {
-        openByURL(getUrl());
     }
 
     public WebElement findWebElement(By location) {
@@ -169,4 +164,5 @@ public abstract class BasePage<T> extends LoadableComponent<BasePage<T>> {
         Actions actions = new Actions(getDriver());
         actions.contextClick(findWebElement(location)).perform();
     }
+
 }

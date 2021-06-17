@@ -37,6 +37,16 @@ public class LoginDialog extends BasePage<LoginDialog> {
         PageFactory.initElements(DriverSetUp.getDriver(), this);
     }
 
+    @Override
+    protected void load() {
+        DriverSetUp.getDriver().get(getUrl());
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        isUserNameFieldDisplayed();
+    }
+
 
     public void enterUsername(String username) {
         if (isDisplayed(usernameField))
@@ -61,5 +71,10 @@ public class LoginDialog extends BasePage<LoginDialog> {
     public boolean isInputFieldRed() {
         return isDisplayed(errorRedBoxClass);
     }
+
+    public boolean isUserNameFieldDisplayed(){
+        return isDisplayed(usernameField);
+    }
+
 
 }

@@ -3,10 +3,13 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import setup.*;
 
+import java.time.Clock;
+
 import static org.junit.Assert.assertTrue;
 
 public class LoginTests {
     private NavBar navBar;
+    Clock clock = Clock.systemUTC();
 
     @BeforeMethod
     public void drive() {
